@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -34,59 +33,84 @@
         <th>Ссылка</th>
       </tr>
     </thead>
-    <tbody>
-      <tr data-gift-index="0">
-        <td><input type="checkbox" class="gift-checkbox"></td>
-        <td>Подарок 1</td>
-        <td>Описание 1</td>
-        <td><a href="http://example.com" target="_blank">Подробнее</a></td>
-      </tr>
-      <tr data-gift-index="1">
-        <td><input type="checkbox" class="gift-checkbox"></td>
-        <td>Подарок 2</td>
-        <td>Описание 2</td>
-        <td><a href="http://example.com" target="_blank">Подробнее</a></td>
-      </tr>
-      <!-- Добавьте нужное количество строк -->
+    <tbody id="gift-tbody">
+      <!-- Строки будут отрисованы динамически -->
     </tbody>
   </table>
   
   <script>
     // URL вашего развернутого Google Apps Script
-    const googleAppsScriptURL = "https://script.google.com/macros/s/AKfycby6M80r3EJzndf8LwFqm-0QXbLQeKBV4KgulAzlFA2HzCDsT5UF2euy--SeEinDQOnM_Q/exec";
-
-    // Находим все чекбоксы и добавляем обработчик
-    document.querySelectorAll('.gift-checkbox').forEach(function(checkbox) {
-      checkbox.addEventListener('change', function() {
-        const row = this.closest('tr');
-        const giftIndex = row.getAttribute('data-gift-index');
-        const reserved = this.checked;
+    const appsScriptURL = "https://script.google.com/macros/s/AKfycby6M80r3EJzndf8LwFqm-0QXbLQeKBV4KgulAzlFA2HzCDsT5UF2euy--SeEinDQOnM_Q/exec";
+    
+    // Функция загрузки данных (GET)
+    function loadGifts() {
+      fetch(appsScriptURL + "?action=getGifts")
+        .then(response => response.json())
+        .then(data => renderTable(data))
+        .catch(error => console.error("Ошибка загрузки данных:", error));
+    }
+    
+    // Функция отрисовки таблицы по полученным данным
+    function renderTable(gifts) {
+      const tbody = document.getElementById("gift-tbody");
+      tbody.innerHTML = "";
+      gifts.forEach((gift, index) => {
+        const tr = document.createElement("tr");
+        tr.dataset.index = index;
         
-        // Обновляем визуальное состояние строки
-        if (reserved) {
-          row.classList.add('selected');
-        } else {
-          row.classList.remove('selected');
-        }
+        const tdCheckbox = document.createElement("td");
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.className = "gift-checkbox";
+        checkbox.checked = gift.reserved;
+        if (gift.reserved) tr.classList.add("selected");
         
-        // Отправляем POST-запрос. Используем mode: 'no-cors', чтобы обойти CORS-ограничения
-        fetch(googleAppsScriptURL, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ giftIndex: giftIndex, reserved: reserved })
-        })
-        .then(response => {
-          // Ответ будет opaque, но можно считать, что данные отправлены
-          console.log("Данные отправлены");
-        })
-        .catch(error => {
-          console.error("Ошибка при отправке данных:", error);
+        // При изменении состояния отправляем POST-запрос для обновления
+        checkbox.addEventListener("change", function() {
+          if (this.checked) {
+            tr.classList.add("selected");
+          } else {
+            tr.classList.remove("selected");
+          }
+          // Отправляем запрос на обновление
+          fetch(appsScriptURL, {
+            method: "POST",
+            mode: "no-cors", // Используется для обхода CORS, ответ будет opaque
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ giftIndex: index, reserved: this.checked })
+          })
+          .then(() => console.log("Данные обновлены"))
+          .catch(err => console.error("Ошибка обновления:", err));
         });
+        tdCheckbox.appendChild(checkbox);
+        tr.appendChild(tdCheckbox);
+        
+        // Название подарка
+        const tdTitle = document.createElement("td");
+        tdTitle.textContent = gift.title;
+        tr.appendChild(tdTitle);
+        
+        // Описание
+        const tdDesc = document.createElement("td");
+        tdDesc.textContent = gift.description;
+        tr.appendChild(tdDesc);
+        
+        // Ссылка
+        const tdLink = document.createElement("td");
+        const a = document.createElement("a");
+        a.href = gift.link;
+        a.target = "_blank";
+        a.textContent = "Подробнее";
+        tdLink.appendChild(a);
+        tr.appendChild(tdLink);
+        
+        tbody.appendChild(tr);
       });
-    });
+    }
+    
+    document.addEventListener("DOMContentLoaded", loadGifts);
   </script>
 </body>
 </html>
