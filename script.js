@@ -7,7 +7,8 @@ function processData(data) {
   // Функция для загрузки данных из Google Таблицы через Tabletop.js
   function init() {
 	Tabletop.init({
-	  key: '2PACX-1vQc6Wwx-j-2LaPnAgnQqBVNZ-b3dFjt2Cxd50_wDVGEzIgRsMJozRPVqfRtBRxEUQR3r64gOSPwLRDZ', // Замените на идентификатор вашей таблицы
+	  key: '1mCgAwH398wqCJ6Ge-N9L44VV1X97vteHGc8pwhc-Tdw', // Замените на идентификатор вашей таблицы
+	  
 	  callback: processData,
 	  simpleSheet: true
 	});
