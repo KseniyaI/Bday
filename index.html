@@ -55,6 +55,9 @@
       const tbody = document.getElementById("gift-tbody");
       tbody.innerHTML = "";
       gifts.forEach((gift, index) => {
+		// Пропускаем строки без названия подарка
+		if (!gift.title || gift.title.trim() === "") return;
+
         const tr = document.createElement("tr");
         tr.dataset.index = index;
         
