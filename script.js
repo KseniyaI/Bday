@@ -9,6 +9,7 @@ function loadGifts() {
             return response.json();
         })
         .then(data => {
+			console.log("Полученные данные:", data); // Добавьте эту строку для проверки
             // Обрабатываем данные
             console.log(data);
             // Отображаем подарки на странице
