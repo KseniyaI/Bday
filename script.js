@@ -1,4 +1,26 @@
-const scriptURL = "https://script.google.com/macros/s/AKfycby6M80r3EJzndf8LwFqm-0QXbLQeKBV4KgulAzlFA2HzCDsT5UF2euy--SeEinDQOnM_Q/exec";
+function loadGifts() {
+    const url = "https://script.google.com/macros/s/AKfycby6M80r3EJzndf8LwFqm-0QXbLQeKBV4KgulAzlFA2HzCDsT5UF2euy--SeEinDQOnM_Q/exec?action=getGifts";
+    
+    fetch(url)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Обрабатываем данные
+            console.log(data);
+            // Отображаем подарки на странице
+            displayGifts(data);
+        })
+        .catch(error => {
+            console.error("Ошибка при загрузке данных:", error);
+        });
+}
+
+
+/* const scriptURL = "https://script.google.com/macros/s/AKfycbwyTXmqPfTdTZYjqm34zJST2S6whGiIM2jV3Bzf5KcH/dev";
 
 async function loadGifts() {
     let response = await fetch(scriptURL + "?action=getGifts");
@@ -29,4 +51,4 @@ async function reserveGift(gift) {
     loadGifts();  // Обновляем список
 }
 
-loadGifts();
+loadGifts(); */
