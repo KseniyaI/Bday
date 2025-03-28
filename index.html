@@ -1,15 +1,92 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Список подарков</title>
-    <!-- Подключаем Tabletop.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.1/tabletop.min.js"></script>
-    <script defer src="script.js"></script>
+  <meta charset="UTF-8">
+  <title>Список подарков</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 80%;
+      margin: 20px auto;
+    }
+    th, td {
+      border: 1px solid #aaa;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #f0f0f0;
+    }
+    .selected {
+      background-color: #d0f0d0;
+    }
+  </style>
 </head>
 <body>
-    <h1>Выбери подарок</h1>
-    <ul id="gift-list"></ul>
+  <h1 style="text-align:center;">Выбери подарок</h1>
+  <table id="gift-table">
+    <thead>
+      <tr>
+        <th>Выбрать</th>
+        <th>Название подарка</th>
+        <th>Описание</th>
+        <th>Ссылка</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr data-gift-index="0">
+        <td><input type="checkbox" class="gift-checkbox"></td>
+        <td>Подарок 1</td>
+        <td>Описание 1</td>
+        <td><a href="http://example.com" target="_blank">Подробнее</a></td>
+      </tr>
+      <tr data-gift-index="1">
+        <td><input type="checkbox" class="gift-checkbox"></td>
+        <td>Подарок 2</td>
+        <td>Описание 2</td>
+        <td><a href="http://example.com" target="_blank">Подробнее</a></td>
+      </tr>
+      <!-- Добавьте нужное количество строк -->
+    </tbody>
+  </table>
+  
+  <script>
+    // URL вашего развернутого Google Apps Script
+    const googleAppsScriptURL = "https://script.google.com/macros/s/AKfycby6M80r3EJzndf8LwFqm-0QXbLQeKBV4KgulAzlFA2HzCDsT5UF2euy--SeEinDQOnM_Q/exec";
+
+    // Находим все чекбоксы и добавляем обработчик
+    document.querySelectorAll('.gift-checkbox').forEach(function(checkbox) {
+      checkbox.addEventListener('change', function() {
+        const row = this.closest('tr');
+        const giftIndex = row.getAttribute('data-gift-index');
+        const reserved = this.checked;
+        
+        // Обновляем визуальное состояние строки
+        if (reserved) {
+          row.classList.add('selected');
+        } else {
+          row.classList.remove('selected');
+        }
+        
+        // Отправляем POST-запрос. Используем mode: 'no-cors', чтобы обойти CORS-ограничения
+        fetch(googleAppsScriptURL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ giftIndex: giftIndex, reserved: reserved })
+        })
+        .then(response => {
+          // Ответ будет opaque, но можно считать, что данные отправлены
+          console.log("Данные отправлены");
+        })
+        .catch(error => {
+          console.error("Ошибка при отправке данных:", error);
+        });
+      });
+    });
+  </script>
 </body>
 </html>
