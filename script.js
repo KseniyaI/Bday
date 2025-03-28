@@ -1,30 +1,29 @@
-// Функция, которая будет вызвана из ответа JSONP и получит данные
-function processGifts(data) {
+// Функция, которая будет вызвана после загрузки данных из таблицы
+function processData(data) {
 	console.log("Полученные данные:", data);
 	displayGifts(data);
   }
   
-  // Функция для загрузки данных через JSONP
-  function loadGifts() {
-	// Добавляем параметр callback для JSONP
-	const url = "https://script.google.com/macros/s/AKfycby6M80r3EJzndf8LwFqm-0QXbLQeKBV4KgulAzlFA2HzCDsT5UF2euy--SeEinDQOnM_Q/exec?action=getGifts&callback=processGifts";
-	const script = document.createElement("script");
-	script.src = url;
-	document.body.appendChild(script);
+  // Функция для загрузки данных из Google Таблицы через Tabletop.js
+  function init() {
+	Tabletop.init({
+	  key: '2PACX-1vQc6Wwx-j-2LaPnAgnQqBVNZ-b3dFjt2Cxd50_wDVGEzIgRsMJozRPVqfRtBRxEUQR3r64gOSPwLRDZ', // Замените на идентификатор вашей таблицы
+	  callback: processData,
+	  simpleSheet: true
+	});
   }
   
   // Функция для отображения подарков на странице
   function displayGifts(data) {
-	const giftList = document.getElementById("gift-list");
-	giftList.innerHTML = "";
-	// Предполагается, что data — массив, где каждый элемент выглядит как [Название, Описание, Ссылка, Статус]
-	data.forEach(gift => {
-	  const li = document.createElement("li");
-	  li.innerHTML = `<strong>${gift[0]}</strong>: ${gift[1]} <a href="${gift[2]}" target="_blank">Подробнее</a>`;
+	const giftList = document.getElementById('gift-list');
+	giftList.innerHTML = '';
+	// Предполагается, что в таблице колонки: "Название подарка", "описание", "ссылка"
+	data.forEach(function(gift) {
+	  const li = document.createElement('li');
+	  li.innerHTML = `<strong>${gift["Название подарка"]}</strong>: ${gift["описание"]} <a href="${gift["ссылка"]}" target="_blank">Подробнее</a>`;
 	  giftList.appendChild(li);
 	});
   }
   
-  // Запускаем загрузку подарков после полной загрузки DOM
-  document.addEventListener("DOMContentLoaded", loadGifts);
+  document.addEventListener('DOMContentLoaded', init);
   
