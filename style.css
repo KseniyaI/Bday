@@ -1,0 +1,25 @@
+body {
+	font-family: sans-serif;
+	text-align: center;
+  }
+  
+  table {
+	border-collapse: collapse;
+	width: 80%;
+	margin: 20px auto;
+  }
+  
+  th, td {
+	border: 1px solid #aaa;
+	padding: 8px;
+	text-align: left;
+  }
+  
+  th {
+	background-color: #f0f0f0;
+  }
+  
+  .selected {
+	background-color: #d0f0d0;
+  }
+  

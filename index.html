@@ -3,27 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <title>Список подарков</title>
-  <style>
-    table {
-      border-collapse: collapse;
-      width: 80%;
-      margin: 20px auto;
-    }
-    th, td {
-      border: 1px solid #aaa;
-      padding: 8px;
-      text-align: left;
-    }
-    th {
-      background-color: #f0f0f0;
-    }
-    .selected {
-      background-color: #d0f0d0;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1 style="text-align:center;">Выбери подарок</h1>
+  <h1>Выбери подарок</h1>
   <table id="gift-table">
     <thead>
       <tr>
@@ -34,86 +17,9 @@
       </tr>
     </thead>
     <tbody id="gift-tbody">
-      <!-- Строки будут отрисованы динамически -->
+      <!-- Строки будут создаваться динамически -->
     </tbody>
   </table>
-  
-  <script>
-    // URL вашего развернутого Google Apps Script
-    const appsScriptURL = "https://script.google.com/macros/s/AKfycby6M80r3EJzndf8LwFqm-0QXbLQeKBV4KgulAzlFA2HzCDsT5UF2euy--SeEinDQOnM_Q/exec";
-    
-    // Функция загрузки данных (GET)
-    function loadGifts() {
-      fetch(appsScriptURL + "?action=getGifts")
-        .then(response => response.json())
-        .then(data => renderTable(data))
-        .catch(error => console.error("Ошибка загрузки данных:", error));
-    }
-    
-    // Функция отрисовки таблицы по полученным данным
-    function renderTable(gifts) {
-      const tbody = document.getElementById("gift-tbody");
-      tbody.innerHTML = "";
-      gifts.forEach((gift, index) => {
-		// Пропускаем строки без названия подарка
-		if (!gift.title || gift.title.trim() === "") return;
-
-        const tr = document.createElement("tr");
-        tr.dataset.index = index;
-        
-        const tdCheckbox = document.createElement("td");
-        const checkbox = document.createElement("input");
-        checkbox.type = "checkbox";
-        checkbox.className = "gift-checkbox";
-        checkbox.checked = gift.reserved;
-        if (gift.reserved) tr.classList.add("selected");
-        
-        // При изменении состояния отправляем POST-запрос для обновления
-        checkbox.addEventListener("change", function() {
-          if (this.checked) {
-            tr.classList.add("selected");
-          } else {
-            tr.classList.remove("selected");
-          }
-          // Отправляем запрос на обновление
-          fetch(appsScriptURL, {
-            method: "POST",
-            mode: "no-cors", // Используется для обхода CORS, ответ будет opaque
-            headers: {
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ giftIndex: index, reserved: this.checked })
-          })
-          .then(() => console.log("Данные обновлены"))
-          .catch(err => console.error("Ошибка обновления:", err));
-        });
-        tdCheckbox.appendChild(checkbox);
-        tr.appendChild(tdCheckbox);
-        
-        // Название подарка
-        const tdTitle = document.createElement("td");
-        tdTitle.textContent = gift.title;
-        tr.appendChild(tdTitle);
-        
-        // Описание
-        const tdDesc = document.createElement("td");
-        tdDesc.textContent = gift.description;
-        tr.appendChild(tdDesc);
-        
-        // Ссылка
-        const tdLink = document.createElement("td");
-        const a = document.createElement("a");
-        a.href = gift.link;
-        a.target = "_blank";
-        a.textContent = "Подробнее";
-        tdLink.appendChild(a);
-        tr.appendChild(tdLink);
-        
-        tbody.appendChild(tr);
-      });
-    }
-    
-    document.addEventListener("DOMContentLoaded", loadGifts);
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
