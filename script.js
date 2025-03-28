@@ -20,6 +20,33 @@ function loadGifts() {
         });
 }
 
+function displayGifts(data) {
+    // Находим элемент списка по его идентификатору
+    const giftList = document.getElementById("gift-list");
+    // Очищаем содержимое списка на случай, если функция вызывается повторно
+    giftList.innerHTML = "";
+
+    // Перебираем полученные данные. Предполагается, что каждый элемент массива — это массив с данными подарка:
+    // [Название, Описание, Ссылка, Статус]
+    data.forEach(gift => {
+        // Создаем элемент списка для каждого подарка
+        const li = document.createElement("li");
+        
+        // Формируем HTML-разметку. Например, выводим название, описание и ссылку на подарок
+        li.innerHTML = `<strong>${gift[0]}</strong>: ${gift[1]} <a href="${gift[2]}" target="_blank">Подробнее</a>`;
+        
+        // Если статус подарка (например, "забронирован") нужно как-то обозначить, можно добавить проверку:
+        // if (gift[3] && gift[3] === "забронирован") { ... }
+
+        // Добавляем сформированный элемент в список
+        giftList.appendChild(li);
+    });
+}
+
+
+document.addEventListener("DOMContentLoaded", loadGifts);
+
+
 
 /* const scriptURL = "https://script.google.com/macros/s/AKfycbwyTXmqPfTdTZYjqm34zJST2S6whGiIM2jV3Bzf5KcH/dev";
 
