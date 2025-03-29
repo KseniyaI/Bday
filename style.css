@@ -43,4 +43,8 @@ body {
   .selected {
 	background-color: rgba(233, 203, 216, 0.5);
   }
-  
+@media (max-width: 600px) {
+	body {
+		background-position: center -10px;
+	}	
+}
