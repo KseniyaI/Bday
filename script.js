@@ -16,7 +16,8 @@ function renderTable(gifts) {
 
 	gifts.forEach((gift, index) => {
 		// Если поле "Название подарка" пустое, пропускаем строку
-		if (!gift.title || gift.title.trim() === "") return;
+		if (!gift.title || gift.title.trim() === "")
+			return;
 
 		const tr = document.createElement("tr");
 		tr.dataset.index = index;
@@ -55,7 +56,7 @@ function renderTable(gifts) {
 		tr.appendChild(tdDesc);
 
 		// Ссылка "Подробнее"
-		const tdLink = document.createElement("td");
+		/* const tdLink = document.createElement("td");
 		if (gift.link && gift.link.trim() !== "") {
 			const a = document.createElement("a");
 			a.href = gift.link;
@@ -65,7 +66,31 @@ function renderTable(gifts) {
 		} else {
 			tdLink.textContent = ""; // или можно написать "нет ссылки"
 		}
+		tr.appendChild(tdLink); */
+		const tdLink = document.createElement("td");
+		if (gift.link && gift.link.trim() !== "") {
+			// Разбиваем строку на ссылки. Здесь можно указать нужный разделитель.
+			// Пример: разделение по запятой, точке с запятой или переводу строки.
+			const links = gift.link.split(/[,;\n]+/).map(link => link.trim()).filter(link => link !== "");
+
+			links.forEach((url, index) => {
+				const a = document.createElement("a");
+				a.href = url;
+				a.target = "_blank";
+				a.textContent = "Подробнее";
+				tdLink.appendChild(a);
+
+				// Если ссылка не последняя, добавляем разделитель (например, пробел или перенос строки)
+				if (index < links.length - 1) {
+					tdLink.appendChild(document.createTextNode(" ")); // можно заменить на <br> для переноса строки
+					// tdLink.appendChild(document.createElement("br"));
+				}
+			});
+		} else {
+			tdLink.textContent = ""; // или можно написать "нет ссылки"
+		}
 		tr.appendChild(tdLink);
+
 
 		tbody.appendChild(tr);
 	});

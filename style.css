@@ -5,7 +5,7 @@ body {
 	background-image: url('My Invitation background.jpeg');
 	background-size: cover;
 	background-repeat: no-repeat;
-	background-position: center -350px;
+	background-position: center -10px;
 	background-color: rgba(255, 255, 255, 0.6);
     background-blend-mode: lighten;
 
@@ -47,4 +47,9 @@ body {
 	body {
 		background-position: center -10px;
 	}	
+
+	h1 {
+		font-size: 20px;
+		margin: 10px 0;
+	  }
 }
