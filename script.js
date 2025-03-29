@@ -69,8 +69,7 @@ function renderTable(gifts) {
 		tr.appendChild(tdLink); */
 		const tdLink = document.createElement("td");
 		if (gift.link && gift.link.trim() !== "") {
-			// Разбиваем строку на ссылки. Здесь можно указать нужный разделитель.
-			// Пример: разделение по запятой, точке с запятой или переводу строки.
+			// Разбиваем строку на ссылки по запятым, точкам с запятой или переводам строки
 			const links = gift.link.split(/[,;\n]+/).map(link => link.trim()).filter(link => link !== "");
 
 			links.forEach((url, index) => {
@@ -80,10 +79,9 @@ function renderTable(gifts) {
 				a.textContent = "Подробнее";
 				tdLink.appendChild(a);
 
-				// Если ссылка не последняя, добавляем разделитель (например, пробел или перенос строки)
+				// Если ссылка не последняя, добавляем перевод строки
 				if (index < links.length - 1) {
-					tdLink.appendChild(document.createTextNode(" ")); // можно заменить на <br> для переноса строки
-					// tdLink.appendChild(document.createElement("br"));
+					tdLink.appendChild(document.createElement("br"));
 				}
 			});
 		} else {
