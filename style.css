@@ -1,11 +1,29 @@
 body {
-	font-family: sans-serif;
+	font-family: "Comic Sans MS";
+	color: #464e55;
 	text-align: center;
+	background-image: url('My Invitation background.jpeg');
+	background-size: cover;
+	background-position: center -350px;
+	background-color: rgba(255, 255, 255, 0.6);
+    background-blend-mode: lighten;
+
+  }
+
+  h1 {
+	font-family: "Comic Sans MS", "Lucida Handwriting", cursive;
+
+	font-size: 44px;
+	color: #d4548e;
+  }
+
+  h3 {
+	font-family: "Brush Script MT", "Segoe Script", cursive;
   }
   
   table {
 	border-collapse: collapse;
-	width: 80%;
+	width: auto;
 	margin: 20px auto;
   }
   
@@ -16,10 +34,12 @@ body {
   }
   
   th {
-	background-color: #f0f0f0;
+	background-color: rgba(213, 168, 189, 0.5);
+	font-family: "Brush Script MT", "Segoe Script", cursive;
+	text-align: center;
   }
   
   .selected {
-	background-color: #d0f0d0;
+	background-color: rgba(233, 203, 216, 0.5);
   }
   
