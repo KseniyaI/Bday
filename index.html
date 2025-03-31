@@ -1,28 +1,39 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Wish List</title>
-  <link rel="icon" href="birthday-cake.png" type="image/png">
-  <link rel="stylesheet" href="style.css">
+	<meta charset="UTF-8">
+	<title>Wish List</title>
+	<link rel="icon" href="birthday-cake.png" type="image/png">
+	<link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-  <h1>Wish List</h1>
-  <h3>Здесь то, что выбрала Настя. Вообще, будет рада любому подарку.
-	<br>Отметьте, пожалуйста, если что-то выберете <br>(выбор сохранится автоматически)</h3>
-  <table id="gift-table">
-    <thead>
-      <tr>
-        <th>Выбрать</th>
-        <th>Название подарка</th>
-        <th>Описание</th>
-        <th>Ссылка</th>
-      </tr>
-    </thead>
-    <tbody id="gift-tbody">
-      <!-- Строки будут создаваться динамически -->
-    </tbody>
-  </table>
-  <script src="script.js"></script>
+	<h1>Wish List</h1>
+	<h3>Здесь то, что выбрала Настя. Вообще, будет рада любому подарку.
+		<br>Отметьте, пожалуйста, если что-то выберете <br>(выбор сохранится автоматически)
+	</h3>
+	<div id="cards-container" class="cards-container">
+		<!-- Карточки будут создаваться динамически -->
+	</div>
+	<!-- <table id="gift-table">
+		<thead>
+			<tr>
+				<th>Выбрать</th>
+				<th>Название подарка</th>
+				<th>Описание</th>
+				<th>Ссылка</th>
+			</tr>
+		</thead>
+		<tbody id="gift-tbody">
+			Строки будут создаваться динамически
+		</tbody>
+	</table> -->
+	<script src="script.js"></script>
 </body>
+
+<footer>
+	<h3>Спасибо!<br>Ждём вас на празднике</h3>
+</footer>
+
 </html>

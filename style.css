@@ -7,49 +7,123 @@ body {
 	background-repeat: no-repeat;
 	background-position: center -10px;
 	background-color: rgba(255, 255, 255, 0.6);
-    background-blend-mode: lighten;
+	background-blend-mode: lighten;
 
-  }
+}
 
-  h1 {
+h1 {
 	font-family: "Comic Sans MS", "Lucida Handwriting", cursive;
-
-	font-size: 44px;
+	font-size: 50px;
 	color: #d4548e;
-  }
+	text-shadow: 2px 2px 8px rgba(70, 78, 85, 0.6);
+}
 
-  h3 {
+h3 {
 	font-family: "Brush Script MT", "Segoe Script", cursive;
-  }
-  
-  table {
+}
+
+table {
 	border-collapse: collapse;
 	width: auto;
 	margin: 20px auto;
-  }
-  
-  th, td {
+}
+
+th,
+td {
 	border: 1px solid #aaa;
 	padding: 8px;
 	text-align: left;
-  }
-  
-  th {
+}
+
+th {
 	background-color: rgba(213, 168, 189, 0.5);
 	font-family: "Brush Script MT", "Segoe Script", cursive;
 	text-align: center;
-  }
-  
-  .selected {
+}
+
+.selected {
 	background-color: rgba(233, 203, 216, 0.5);
-  }
+}
+
+/* Контейнер для карточек */
+.cards-container {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 20px;
+	padding: 20px;
+}
+
+/* Стили карточки */
+.card {
+	position: relative;
+	width: 300px;
+	/* Ширина карточки; можно менять по необходимости */
+	padding: 16px;
+	border: 1px solid #ccc;
+	border-radius: 8px;
+	background-color: rgba(255, 255, 255, 0.6);
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Стили для чекбокса внутри карточки */
+.card-checkbox {
+	accent-color: white;
+	position: absolute;
+	top: 10px;
+	left: 10px;
+}
+
+/* Стили для заголовка карточки */
+.card h2 {
+	margin-top: 0;
+	font-size: 20px;
+	margin-bottom: 8px;
+}
+
+/* Стили для описания */
+.card p {
+	font-size: 16px;
+	margin: 8px 0;
+	margin-bottom: 20px;
+}
+
+/* Стили для ссылки */
+.card a {
+	text-decoration: none;
+	color: #840d64;
+	display: block;
+	margin-top: 0px;
+}
+
+/* Стили для выделенной карточки (например, когда выбран подарок) */
+.card.selected {
+	background-color: rgba(233, 203, 216, 0.5);
+}
+
+
 @media (max-width: 600px) {
 	body {
 		background-position: center -10px;
-	}	
+	}
 
 	h1 {
 		font-size: 20px;
 		margin: 10px 0;
-	  }
+	}
+
+	.card {
+		width: 90%;
+		margin: 0 auto;
+		padding: 20px;
+	}
+
+	.card h2 {
+		font-size: 22px;
+	}
+
+	.card p,
+	.card a {
+		font-size: 18px;
+	}
 }
