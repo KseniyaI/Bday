@@ -1,5 +1,5 @@
 body {
-	font-family: "Comic Sans MS";
+	font-family: "Bellota", system-ui;
 	color: #464e55;
 	text-align: center;
 	background-image: url('My Invitation background.jpeg');
@@ -12,14 +12,14 @@ body {
 }
 
 h1 {
-	font-family: "Comic Sans MS", "Lucida Handwriting", cursive;
-	font-size: 50px;
+	font-family: "Gamja Flower", sans-serif;
+	font-size: 60px;
 	color: #d4548e;
 	text-shadow: 2px 2px 8px rgba(70, 78, 85, 0.6);
 }
 
 h3 {
-	font-family: "Brush Script MT", "Segoe Script", cursive;
+	font-family: "Bellota", system-ui;
 }
 
 /* .selected {
