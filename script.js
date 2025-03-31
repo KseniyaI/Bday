@@ -4,10 +4,10 @@ const appsScriptURL = "https://script.google.com/macros/s/AKfycby6M80r3EJzndf8Lw
 // Загрузка данных из Google Таблицы(GET-запрос)
 function loadGifts() {
 	fetch(appsScriptURL + "?action=getGifts")
-	  .then(response => response.json())
-	  .then(data => renderCards(data))
-	  .catch(error => console.error("Ошибка загрузки данных:", error));
-  }
+		.then(response => response.json())
+		.then(data => renderCards(data))
+		.catch(error => console.error("Ошибка загрузки данных:", error));
+}
 
 // Функция для отрисовки таблицы на основе полученных данных
 /* function renderTable(gifts) {
@@ -82,73 +82,70 @@ function loadGifts() {
 	});
 } */
 
-	// Функция отрисовки карточек
+// Функция отрисовки карточек
 function renderCards(gifts) {
 	const container = document.getElementById("cards-container");
 	container.innerHTML = "";
-	
+
 	gifts.forEach((gift, index) => {
-	  // Пропускаем строки без названия
-	  if (!gift.title || gift.title.trim() === "") return;
-	  
-	  // Создаем карточку
-	  const card = document.createElement("div");
-	  card.classList.add("card");
-	  card.dataset.index = index;
-	  
-	  // Если gift.title не равен ".", добавляем чекбокс
-	  if (gift.title !== ".") {
+		// Пропускаем строки без названия
+		if (!gift.title || gift.title.trim() === "") return;
+
+		// Создаем карточку
+		const card = document.createElement("div");
+		card.classList.add("card");
+		card.dataset.index = index;
+
 		const checkbox = document.createElement("input");
 		checkbox.type = "checkbox";
 		checkbox.classList.add("card-checkbox");
 		checkbox.checked = gift.reserved;
 		if (gift.reserved) card.classList.add("selected");
-		
-		checkbox.addEventListener("change", function() {
-		  if (this.checked) {
-			card.classList.add("selected");
-		  } else {
-			card.classList.remove("selected");
-		  }
-		  updateGift(index, this.checked);
+
+		checkbox.addEventListener("change", function () {
+			if (this.checked) {
+				card.classList.add("selected");
+			} else {
+				card.classList.remove("selected");
+			}
+			updateGift(index, this.checked);
 		});
 		card.appendChild(checkbox);
-	  }
-	  
-	  // Заголовок карточки
-	  const titleEl = document.createElement("h2");
-	  titleEl.textContent = gift.title;
-	  card.appendChild(titleEl);
-	  
-	  // Описание подарка
-	  const descEl = document.createElement("p");
-	  descEl.textContent = gift.description;
-	  card.appendChild(descEl);
-	  
-	  // Блок для ссылок "Подробнее"
-	  const linksBlock = document.createElement("div");
-	  if (gift.link && gift.link.trim() !== "") {
-		// Разбиваем строку на отдельные ссылки (по запятым, точкам с запятой или переводу строки)
-		const links = gift.link.split(/[,;\n]+/).map(link => link.trim()).filter(link => link !== "");
-		links.forEach((url, i) => {
-		  const a = document.createElement("a");
-		  a.href = url;
-		  a.target = "_blank";
-		  a.textContent = "Ссылка " + (i + 1);
-		  linksBlock.appendChild(a);
-		  // Каждая ссылка на новой строке
-		  if (i < links.length - 1) {
-			linksBlock.appendChild(document.createElement("br"));
-		  }
-		});
-	  } else {
-		linksBlock.textContent = ""; // Можно указать "нет ссылки", если нужно
-	  }
-	  card.appendChild(linksBlock);
-	  
-	  container.appendChild(card);
+
+		// Заголовок карточки
+		const titleEl = document.createElement("h2");
+		titleEl.textContent = gift.title;
+		card.appendChild(titleEl);
+
+		// Описание подарка
+		const descEl = document.createElement("p");
+		descEl.textContent = gift.description;
+		card.appendChild(descEl);
+
+		// Блок для ссылок "Подробнее"
+		const linksBlock = document.createElement("div");
+		if (gift.link && gift.link.trim() !== "") {
+			// Разбиваем строку на отдельные ссылки (по запятым, точкам с запятой или переводу строки)
+			const links = gift.link.split(/[,;\n]+/).map(link => link.trim()).filter(link => link !== "");
+			links.forEach((url, i) => {
+				const a = document.createElement("a");
+				a.href = url;
+				a.target = "_blank";
+				a.textContent = "Ссылка " + (i + 1);
+				linksBlock.appendChild(a);
+				// Каждая ссылка на новой строке
+				if (i < links.length - 1) {
+					linksBlock.appendChild(document.createElement("br"));
+				}
+			});
+		} else {
+			linksBlock.textContent = ""; // Можно указать "нет ссылки", если нужно
+		}
+		card.appendChild(linksBlock);
+
+		container.appendChild(card);
 	});
-  }
+}
 
 // Функция для отправки обновления (POST-запрос)
 function updateGift(giftIndex, reserved) {
